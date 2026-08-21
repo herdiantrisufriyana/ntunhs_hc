@@ -27,6 +27,7 @@ Course repository for **Hospital Clinical Data Analysis** (1864), Graduate Insti
 | 15 | Capstone project presentation | [hc_meeting15_content.md](hc_meeting15_content.md) |
 | 16 | Open-book exam practice | — |
 | 17 | Open-book exam | — |
+| 18 | Course review and grade consultation | [hc_meeting18_content.md](hc_meeting18_content.md) |
 
 ## Assessment
 
