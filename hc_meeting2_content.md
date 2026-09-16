@@ -212,7 +212,7 @@ The ATC system has 5 levels, from broad anatomical group to specific chemical su
 A10BA02
 │ ││ ││
 │ ││ │└─ Level 5: Chemical substance (02 = metformin)
-│ ││ └── Level 4: Chemical subgroup (BA = biguanides)
+│ ││ └── Level 4: Chemical subgroup (A = biguanides)
 │ │└──── Level 3: Pharmacological subgroup (B = blood glucose lowering drugs, excl. insulins)
 │ └───── Level 2: Therapeutic subgroup (10 = drugs used in diabetes)
 └─────── Level 1: Anatomical main group (A = alimentary tract and metabolism)
