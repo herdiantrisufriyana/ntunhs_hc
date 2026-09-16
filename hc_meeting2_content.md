@@ -360,7 +360,7 @@ In this session, you will practice using online tools to look up clinical codes.
 
 | Tool | URL | What It Does |
 |------|-----|-------------|
-| WHO ICD-10 Browser | https://icd.who.int/browse/ | Look up ICD-10 diagnosis codes by searching for a disease or browsing by chapter |
+| WHO ICD-10 Browser | https://icd.who.int/browse10/2019/en | Look up ICD-10 diagnosis codes by searching for a disease or browsing by chapter |
 | WHO ATC/DDD Index | https://atcddd.fhi.no/atc_ddd_index/ | Look up ATC drug codes by searching for a drug name or browsing by anatomical group |
 | LOINC Search | https://loinc.org/search/ | Look up LOINC codes for laboratory tests by searching for a test name |
 

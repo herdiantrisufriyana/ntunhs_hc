@@ -86,7 +86,7 @@ National Taiwan University of Nursing and Health Sciences
 - Course repository: https://github.com/herdiantrisufriyana/ntunhs_hc
 - Orange Data Mining documentation: https://orangedatamining.com/docs/
 - MIMIC-IV for practice: https://mimic.mit.edu/
-- WHO ICD browser: https://icd.who.int/browse/
+- WHO ICD-10 browser: https://icd.who.int/browse10/2019/en
 
 [Back to Table of Contents](#table-of-contents)
 
