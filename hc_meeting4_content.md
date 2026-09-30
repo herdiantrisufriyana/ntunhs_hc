@@ -112,13 +112,13 @@ When and how you determine whether the outcome occurred.
 
 | Component | Definition |
 |-----------|-----------|
-| **Study population** | Adults (age >= 18) admitted with a primary diagnosis of heart failure (I50.x) |
+| **Study population** | Adults (age >= 18) discharged alive from an admission with a primary diagnosis of heart failure (I50.x). Excludes in-hospital deaths and inter-facility transfers (these patients never reach the index date). |
 | **Index date** | Discharge date |
 | **Exposed group** | Patients with metformin on their discharge medication list |
 | **Unexposed group** | Patients without metformin on their discharge medication list |
 | **Follow-up period** | 30 days from discharge |
 | **Outcome** | Any hospital readmission within 30 days of discharge |
-| **Exclusion criteria** | Died during index admission, transferred to another facility, left against medical advice |
+| **Exclusion criteria** | Discharged to hospice or palliative care (readmission is not a meaningful outcome), planned readmission already scheduled at discharge (not an unplanned event) |
 
 **Timeline Diagram**
 
@@ -146,8 +146,9 @@ Patient D: Discharged Day 0 --- Lost to follow-up Day 15 --- Outcome: ? (incompl
 **Critical Design Decisions**
 
 - **Why discharge date, not admission date?** Because the exposure (discharge medications) is not known until discharge. Using admission date would include time before the exposure is determined.
-- **Why exclude deaths during admission?** Because patients who die cannot be readmitted. Including them would dilute the denominator.
-- **Why exclude transfers?** Because a transfer is not a readmission — the patient never left the hospital system. Including transfers would contaminate the outcome.
+- **Why are in-hospital deaths and transfers in the population definition, not exclusion criteria?** Because these patients never reach the index date (discharge). They do not enter the cohort in the first place — there is no inference point for them.
+- **Why exclude hospice discharges?** Because readmission is not a clinically meaningful outcome for patients discharged to end-of-life care. This is known at discharge and happens after inclusion (admission with heart failure).
+- **Why exclude planned readmissions?** Because a scheduled return (e.g., for a cardiac procedure) is not an unplanned readmission. This is known at discharge and would contaminate the outcome if counted.
 
 > **Note:** The timeline diagram is the single most important element of a cohort study design. If you cannot draw a clear timeline showing when each patient enters the study, when the exposure is measured, and when the outcome is assessed, your design is not well-defined.
 
