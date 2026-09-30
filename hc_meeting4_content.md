@@ -137,10 +137,19 @@ Admission     Discharge        30 days post-discharge
 
 --- Cohort entry is DISCHARGE DATE ---
 
-Patient A: Discharged Day 0 --- No readmission by Day 30 --- Outcome: No
-Patient B: Discharged Day 0 --- Readmitted Day 12 ---------- Outcome: Yes
-Patient C: Discharged Day 0 --- Died Day 8 (not readmitted)- Outcome: No (censored/competing risk)
-Patient D: Discharged Day 0 --- Lost to follow-up Day 15 --- Outcome: ? (incomplete follow-up)
+Not in cohort (never reach index date):
+  Patient X: Admitted --- Died during admission --- No discharge date
+  Patient Y: Admitted --- Transferred to another facility --- No discharge date
+
+In cohort but excluded (known at discharge):
+  Patient Z: Discharged to hospice --- Readmission not meaningful --- Excluded
+  Patient W: Planned readmission scheduled at discharge ----------- Excluded
+
+In cohort and analyzed:
+  Patient A: Discharged Day 0 --- No readmission by Day 30 --- Outcome: No
+  Patient B: Discharged Day 0 --- Readmitted Day 12 ---------- Outcome: Yes
+  Patient C: Discharged Day 0 --- Died Day 8 (not readmitted)- Outcome: No (competing risk)
+  Patient D: Discharged Day 0 --- Data ends Day 15 ----------- Outcome: Missing (right censored)
 ```
 
 **Critical Design Decisions**
