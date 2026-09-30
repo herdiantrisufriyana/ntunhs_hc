@@ -53,7 +53,7 @@ Two researchers can use the same hospital database and reach opposite conclusion
 
 - If your study population includes patients who should have been excluded (e.g., patients already on treatment when you are studying treatment initiation), your results will be biased.
 - If your data does not cover a full 30 days after discharge for every patient (e.g., patients discharged near the end of the dataset), their readmission outcome is missing — not "No." This is right censoring, and should be handled appropriately (e.g., using time-to-event methods that account for censoring, or restricting the outcome window to a period fully covered by the data).
-- If you do not account for the passage of time correctly, you can create the illusion of a treatment effect where none exists.
+- If you count time before treatment starts as treated time, patients in the treatment group appear to survive longer simply because they had to be alive to receive treatment — creating a false treatment effect.
 
 **Most hospital data analysis is observational:**
 
