@@ -396,7 +396,7 @@ They MUST survive this period to receive the exposure.
 
 - **What it is:** Comparing groups that have different amounts of follow-up time without accounting for the difference.
 - **Clinical example:** Patients admitted in January 2024 have 12 months of follow-up data. Patients admitted in November 2024 have only 2 months. If you compare readmission rates without accounting for follow-up time, patients admitted in January will appear to have higher readmission rates simply because they had more time to be readmitted.
-- **Fix:** Use survival analysis methods (Kaplan-Meier, Cox regression) that account for varying follow-up times. Alternatively, use a fixed follow-up window (e.g., exactly 30 days for all patients, excluding patients with less than 30 days of available follow-up).
+- **Fix:** Use survival analysis methods (Kaplan-Meier, Cox regression) that account for varying follow-up times and right censoring.
 
 **4. Selection Bias from Single-Center Data**
 
