@@ -52,7 +52,7 @@ Two researchers can use the same hospital database and reach opposite conclusion
 **Garbage in, garbage out:**
 
 - If your study population includes patients who should have been excluded (e.g., patients already on treatment when you are studying treatment initiation), your results will be biased.
-- If your outcome window is wrong (e.g., measuring 30-day readmission but only following patients for 14 days), your results will be wrong.
+- If your data does not cover a full 30 days after discharge for every patient (e.g., patients discharged near the end of the dataset), their readmission outcome is missing — not "No." This is right censoring, and should be handled appropriately (e.g., using time-to-event methods that account for censoring, or restricting the outcome window to a period fully covered by the data).
 - If you do not account for the passage of time correctly, you can create the illusion of a treatment effect where none exists.
 
 **Most hospital data analysis is observational:**
