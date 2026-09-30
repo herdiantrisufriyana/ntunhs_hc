@@ -264,17 +264,22 @@ ICD-10 codes are the primary tool for identifying patients with specific conditi
 
 **Common Inclusion/Exclusion Criteria**
 
-**Exclusion criteria protect the validity of your study.** Each exclusion must have a clinical or methodological rationale.
+**Inclusion criteria** define who enters the cohort. They are conditions **known at the time of enrollment** (the index date).
 
-| Exclusion Criterion | Rationale |
-|---------------------|-----------|
-| Age < 18 years | Pediatric patients have different disease patterns and treatment approaches |
-| Length of stay < 1 day (or < 24 hours) | Observation stays or same-day procedures — different clinical population |
-| Transferred from another facility | Cannot determine prior exposure or comorbidity status |
-| Transferred to another facility | Cannot ascertain outcomes at the receiving hospital |
-| Died during index admission | Cannot experience post-discharge outcomes (readmission) |
-| Left against medical advice (AMA) | Non-standard discharge — different risk profile |
-| Missing primary diagnosis code | Cannot confirm the patient has the condition of interest |
+**Exclusion criteria** remove patients **after enrollment**. They are conditions that happen after the index date but are known before the outcome occurs.
+
+| Criterion | Type | Rationale |
+|-----------|------|-----------|
+| Age >= 18 years | Inclusion | Known at enrollment. Pediatric patients have different disease patterns |
+| Primary diagnosis matches target condition | Inclusion | Known at enrollment. Defines the clinical population |
+| Discharged alive (for post-discharge outcomes) | Inclusion | Known at index date. Patients who died never reach the index date |
+| No prior use of study medication within washout period | Inclusion | Known at enrollment. Ensures new users |
+| Length of stay >= 1 day | Inclusion | Known at index date. Removes observation stays or same-day procedures |
+| Not transferred from/to another facility | Inclusion | Known at enrollment/index date. Defines the population with complete data |
+| Primary diagnosis code is present | Inclusion | Known at enrollment. Cannot confirm condition without it |
+| Discharged to hospice or palliative care | Exclusion | Determined during admission, known at discharge but not at admission. Readmission is not a meaningful outcome for end-of-life patients |
+| Planned readmission scheduled at discharge | Exclusion | Determined during admission, known at discharge but not at admission. A scheduled return is not an unplanned event |
+| Comfort care / DNR order placed after admission | Exclusion | Determined after enrollment. Expected deaths are not treatment failures |
 
 **Index Date Definition**
 
@@ -301,35 +306,44 @@ Without a washout period, your "new users" group is contaminated with prevalent 
 
 **Question 1: Does statin use reduce 30-day readmission in patients with acute myocardial infarction (AMI)?**
 
-| Criterion | Type | Definition |
+Index date: Discharge date
+
+| Criterion | Type | Rationale |
 |-----------|------|-----------|
-| Primary diagnosis I21.x (AMI) | Inclusion | Identifies AMI patients |
-| Age >= 18 | Inclusion | Adult patients only |
-| Discharged alive | Inclusion | Must survive to be at risk for readmission |
-| Prior statin use within 90 days | Exclusion | Ensures new statin users (washout) |
-| Transferred to another facility | Exclusion | Cannot ascertain outcomes |
-| Length of stay < 1 day | Exclusion | Likely rule-out admissions, not true AMI |
+| Primary diagnosis I21.x (AMI) | Inclusion | Known at discharge. Identifies AMI patients |
+| Age >= 18 | Inclusion | Known at discharge. Adult patients only |
+| Discharged alive, not transferred out | Inclusion | Known at discharge. Must reach index date |
+| No prior statin use within 90 days | Inclusion | Known at discharge. Ensures new statin users (washout) |
+| Length of stay >= 1 day | Inclusion | Known at discharge. Removes rule-out admissions |
+| Discharged to hospice | Exclusion | Determined during admission. Readmission not meaningful |
+| Planned cardiac procedure readmission scheduled | Exclusion | Determined during admission. Not an unplanned readmission |
 
 **Question 2: Is ICU admission associated with in-hospital mortality among patients with community-acquired pneumonia (CAP)?**
 
-| Criterion | Type | Definition |
+Index date: Admission date
+
+| Criterion | Type | Rationale |
 |-----------|------|-----------|
-| Primary diagnosis J13-J18 (pneumonia) | Inclusion | Identifies pneumonia patients |
-| Age >= 18 | Inclusion | Adult patients only |
-| Hospital-acquired pneumonia (diagnosed > 48h after admission) | Exclusion | Different etiology and prognosis |
-| Transferred from another hospital ICU | Exclusion | Different baseline severity |
-| Comfort care / DNR within 24h of admission | Exclusion | Expected deaths, not treatment failures |
+| Primary diagnosis J13-J18 (pneumonia) | Inclusion | Known at admission. Identifies pneumonia patients |
+| Age >= 18 | Inclusion | Known at admission. Adult patients only |
+| Not transferred from another hospital ICU | Inclusion | Known at admission. Ensures comparable baseline severity |
+| Pneumonia diagnosed > 48h after admission (hospital-acquired) | Exclusion | NOT known at admission. Determined after workup. Different etiology and prognosis |
+| Comfort care / DNR order placed after admission | Exclusion | NOT known at admission. Determined during the stay. Expected deaths, not treatment failures |
 
 **Question 3: Does early physical therapy reduce length of stay after hip fracture surgery?**
 
-| Criterion | Type | Definition |
+Index date: Surgery date
+
+| Criterion | Type | Rationale |
 |-----------|------|-----------|
-| Primary diagnosis S72.0x (femoral neck fracture) or S72.1x (trochanteric fracture) | Inclusion | Identifies hip fracture patients |
-| Procedure code for hip fracture surgery (ICD-10-PCS 0SRx or 0QSx) | Inclusion | Surgical patients only |
-| Age >= 65 | Inclusion | Geriatric hip fractures (different from young trauma) |
-| Pathological fracture (M84.4x) | Exclusion | Different etiology (cancer, metabolic bone disease) |
-| Polytrauma (ISS > 15) | Exclusion | Length of stay driven by other injuries |
-| Prior hip surgery within 1 year | Exclusion | Revision surgery has different recovery trajectory |
+| Primary diagnosis S72.0x (femoral neck fracture) or S72.1x (trochanteric fracture) | Inclusion | Known at surgery. Identifies hip fracture patients |
+| Procedure code for hip fracture surgery (ICD-10-PCS 0SRx or 0QSx) | Inclusion | Known at surgery. Surgical patients only |
+| Age >= 65 | Inclusion | Known at surgery. Geriatric hip fractures (different from young trauma) |
+| Not pathological fracture (M84.4x) | Inclusion | Known at surgery. Different etiology (cancer, metabolic bone disease) |
+| Not polytrauma (ISS > 15) | Inclusion | Known at surgery. LOS would be driven by other injuries |
+| No prior hip surgery within 1 year | Inclusion | Known at surgery. Revision surgery has different recovery trajectory |
+| Surgical complication requiring return to OR | Exclusion | NOT known at surgery. Determined post-operatively. LOS driven by complication, not PT timing |
+| Transfer to another facility before PT could begin | Exclusion | NOT known at surgery. Determined post-operatively. Cannot assess PT effect |
 
 > **Note:** Defining your study population is the most consequential decision in any hospital data analysis. Spend more time on inclusion/exclusion criteria than on choosing the statistical method. A perfect model applied to the wrong population is worthless.
 
