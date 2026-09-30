@@ -455,7 +455,7 @@ Complete the following study design worksheet:
 | Target condition (ICD-10 codes) | |
 | Age restriction | |
 | Other inclusion criteria | |
-| Exclusion criteria (list at least 3) | |
+| Exclusion criteria (if any) | |
 
 **2. Exposure and Outcome**
 
@@ -504,7 +504,7 @@ Complete the same worksheet:
 | Target condition (ICD-10 codes) | |
 | Age restriction | |
 | Other inclusion criteria | |
-| Exclusion criteria (list at least 3) | |
+| Exclusion criteria (if any) | |
 
 **2. Exposure and Outcome**
 
@@ -545,7 +545,7 @@ Complete the same worksheet:
 | Target condition (ICD-10 codes) | |
 | Age restriction | |
 | Other inclusion criteria | |
-| Exclusion criteria (list at least 3) | |
+| Exclusion criteria (if any) | |
 
 **2. Exposure and Outcome**
 
