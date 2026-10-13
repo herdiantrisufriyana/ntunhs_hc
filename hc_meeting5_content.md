@@ -13,8 +13,9 @@ National Taiwan University of Nursing and Health Sciences
 3. [Session 2: Lecture — Missing Data Mechanisms (20 min)](#session-2-lecture--missing-data-mechanisms-20-min)
 4. [Session 3: Lecture — Data Plausibility and Validation (20 min)](#session-3-lecture--data-plausibility-and-validation-20-min)
 5. [Session 4: Lecture — Temporal Data Quality (15 min)](#session-4-lecture--temporal-data-quality-15-min)
-6. [Session 5: Hands-on — Data Quality Audit Checklist (25 min)](#session-5-hands-on--data-quality-audit-checklist-25-min)
-7. [Session 6: Lecture — Handling Data Quality Issues (15 min)](#session-6-lecture--handling-data-quality-issues-15-min)
+6. [Session 5: Hands-on — Data Quality Audit Checklist (15 min)](#session-5-hands-on--data-quality-audit-checklist-15-min)
+7. [Session 6: Hands-on — Data Quality Check in Orange (15 min)](#session-6-hands-on--data-quality-check-in-orange-15-min)
+8. [Session 7: Lecture — Handling Data Quality Issues (10 min)](#session-7-lecture--handling-data-quality-issues-10-min)
 
 ---
 
@@ -213,7 +214,7 @@ The most effective approach is to plot variable distributions over time:
 
 ---
 
-## Session 5: Hands-on — Data Quality Audit Checklist (25 min)
+## Session 5: Hands-on — Data Quality Audit Checklist (15 min)
 
 In this session, you will work through a structured data quality audit using the hospital discharge dataset. This is a paper-based exercise: you will use summary statistics (provided or computed by hand) to fill in a data quality report.
 
@@ -321,7 +322,45 @@ Summarize your findings in a data quality report with the following structure:
 
 ---
 
-## Session 6: Lecture — Handling Data Quality Issues (15 min)
+## Session 6: Hands-on — Data Quality Check in Orange (15 min)
+
+In this session, you will load the hospital discharge dataset in Orange and use widgets to identify the data quality issues discussed in the lectures.
+
+**Workflow:**
+
+1. Drag **File** widget onto the canvas and load `data/hospital_discharge.csv`
+2. In the **File** widget, set `readmission_30d` as **Target**, `patient_id` and `primary_dx_icd` as **Meta**, and all others as **Feature**
+3. Click **Apply**
+
+**Step 1: Check missing values**
+
+4. Connect **File** → **Column Statistics** (label it "Quality check")
+5. In **Column Statistics**, look at the **Missing** column for each variable
+6. Identify which variables have the highest missingness — does `hba1c` stand out? Why might that be? (Recall Session 2: MNAR — only ordered when diabetes is suspected)
+
+**Step 2: Check value ranges**
+
+7. Connect **File** → **Distributions**
+8. Select `heart_rate` — look for any extreme values far outside 40-180 bpm
+9. Select `creatinine` — look for any negative or zero values
+10. Select `wbc` — look for any zero values (a living patient cannot have WBC = 0)
+
+**Step 3: Spot implausible records**
+
+11. Connect **File** → **Select Rows** (label it "Implausible HR")
+    - Add condition: `heart_rate` is greater than 300
+    - Connect **Matching Data** → **Data Table** to inspect the flagged record
+12. Connect **File** → **Select Rows** (label it "Negative Cr")
+    - Add condition: `creatinine` is less than 0
+    - Connect **Matching Data** → **Data Table** to inspect
+
+> **Note:** The dataset contains three intentionally planted data quality issues: heart rate = 350 (row 10), creatinine = -0.3 (row 47), and WBC = 0.0 (row 203). In real hospital data, you would investigate these with the clinical team. For this course, you will learn to handle them in Meeting 11 using Impute and Formula widgets.
+
+[Back to Table of Contents](#table-of-contents)
+
+---
+
+## Session 7: Lecture — Handling Data Quality Issues (10 min)
 
 ### Strategies for Addressing Data Quality Problems
 
