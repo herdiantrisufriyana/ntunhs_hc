@@ -13,9 +13,8 @@ National Taiwan University of Nursing and Health Sciences
 3. [Session 2: Lecture — Missing Data Mechanisms (20 min)](#session-2-lecture--missing-data-mechanisms-20-min)
 4. [Session 3: Lecture — Data Plausibility and Validation (20 min)](#session-3-lecture--data-plausibility-and-validation-20-min)
 5. [Session 4: Lecture — Temporal Data Quality (15 min)](#session-4-lecture--temporal-data-quality-15-min)
-6. [Session 5: Hands-on — Data Quality Audit Checklist (15 min)](#session-5-hands-on--data-quality-audit-checklist-15-min)
-7. [Session 6: Hands-on — Data Quality Check in Orange (15 min)](#session-6-hands-on--data-quality-check-in-orange-15-min)
-8. [Session 7: Lecture — Handling Data Quality Issues (10 min)](#session-7-lecture--handling-data-quality-issues-10-min)
+6. [Session 5: Hands-on — Data Quality Audit in Orange (25 min)](#session-5-hands-on--data-quality-audit-in-orange-25-min)
+7. [Session 6: Lecture — Handling Data Quality Issues (15 min)](#session-6-lecture--handling-data-quality-issues-15-min)
 
 ---
 
@@ -214,153 +213,71 @@ The most effective approach is to plot variable distributions over time:
 
 ---
 
-## Session 5: Hands-on — Data Quality Audit Checklist (15 min)
+## Session 5: Hands-on — Data Quality Audit in Orange (25 min)
 
-In this session, you will work through a structured data quality audit using the hospital discharge dataset. This is a paper-based exercise: you will use summary statistics (provided or computed by hand) to fill in a data quality report.
+In this session, you will audit the hospital discharge dataset directly in Orange, checking four dimensions of data quality.
 
-### The Audit Framework
-
-A data quality audit examines four dimensions:
-
-1. **Completeness** — Are all expected values present?
-2. **Plausibility** — Are the values within physiologically possible ranges?
-3. **Consistency** — Do related variables agree with each other logically?
-4. **Timeliness** — Are there temporal patterns that suggest data artifacts?
-
-### Step 1: Completeness Assessment
-
-For each variable in the hospital discharge dataset, determine the percentage of missing values and classify the likely missing data mechanism.
-
-| Variable | % Missing | Likely Mechanism | Reasoning |
-|----------|-----------|-----------------|-----------|
-| patient_id | | | |
-| age | | | |
-| sex | | | |
-| admission_type | | | |
-| primary_dx_icd | | | |
-| charlson_score | | | |
-| length_of_stay | | | |
-| wbc | | | |
-| hemoglobin | | | |
-| creatinine | | | |
-| hba1c | | | |
-| systolic_bp | | | |
-| heart_rate | | | |
-| n_medications | | | |
-| icu_stay | | | |
-| readmission_30d | | | |
-
-**Questions to consider:**
-
-- Which variables have the highest missingness? Why might that be?
-- For hba1c, is the missingness more likely MCAR, MAR, or MNAR? What observed variable might predict whether HbA1c is missing?
-- If a demographic variable like sex has missing values, what does that suggest about the data extraction process?
-
-### Step 2: Plausibility Assessment
-
-Using the reference ranges from Session 3, identify any values that fall outside plausible limits.
-
-| Variable | Min in Data | Max in Data | Plausible Range | Any Implausible? |
-|----------|-------------|-------------|-----------------|-----------------|
-| age | | | 0-120 years | |
-| heart_rate | | | 40-180 bpm | |
-| systolic_bp | | | 60-250 mmHg | |
-| wbc | | | 2-30 (10^3/uL) | |
-| hemoglobin | | | 4-20 g/dL | |
-| creatinine | | | 0.1-15 mg/dL | |
-| hba1c | | | 3-16 % | |
-| length_of_stay | | | 0-365 days | |
-
-**Questions to consider:**
-
-- If you find a hemoglobin value of 22 g/dL, what would you do? Delete it? Flag it? Check the diagnosis?
-- If creatinine = 0.0, is this a plausible value or an error?
-- How would you handle a length_of_stay of 0 days?
-
-### Step 3: Consistency Assessment
-
-Check for logical contradictions between related variables.
-
-**Checks to perform:**
-
-- Is there any patient with age < 18 and a diagnosis typically seen only in elderly patients (e.g., dementia, hip fracture from osteoporosis)?
-- Is there any patient with length_of_stay = 0 but icu_stay = Yes? (If a patient was in the ICU, they should have stayed at least 1 day.)
-- Is there any patient with hba1c < 5.7 (non-diabetic range) but a primary diagnosis code for diabetes (E11.x)?
-- Is there any patient with readmission_30d = Yes but no discharge date recorded? (They cannot be readmitted if they were never discharged.)
-
-| Consistency Check | Found Issues? | Description |
-|-------------------|--------------|-------------|
-| Pediatric age + geriatric diagnosis | | |
-| Zero LOS + ICU stay | | |
-| Normal HbA1c + diabetes diagnosis | | |
-| Readmission without discharge | | |
-
-### Step 4: Timeliness Assessment
-
-If the dataset includes a date variable (or if you know the data collection period), check for temporal patterns.
-
-**Questions to consider:**
-
-- Does the number of records per month remain roughly constant, or are there sudden drops or spikes?
-- If there is a gap in records (e.g., no data for one month), does this coincide with a known system migration or holiday period?
-- Do any lab values show sudden shifts in their distributions at a specific time point?
-
-### Completing the Audit Report
-
-Summarize your findings in a data quality report with the following structure:
-
-1. **Dataset overview:** Number of records, number of variables, data collection period
-2. **Completeness summary:** Variables with >5% missing, likely mechanisms
-3. **Plausibility issues:** Variables with values outside reference ranges, number of affected records
-4. **Consistency issues:** Logical contradictions found, number of affected records
-5. **Temporal issues:** Any detected discontinuities or artifacts
-6. **Recommended actions:** For each issue, state whether you would exclude, impute, flag, or investigate further
-
-> **Note:** This audit checklist is not just a course exercise. In real clinical data analysis, a version of this checklist should be completed before any statistical analysis begins. Many published studies in clinical informatics include a data quality assessment section describing exactly these steps.
-
-[Back to Table of Contents](#table-of-contents)
-
----
-
-## Session 6: Hands-on — Data Quality Check in Orange (15 min)
-
-In this session, you will load the hospital discharge dataset in Orange and use widgets to identify the data quality issues discussed in the lectures.
-
-**Workflow:**
+**Setup:**
 
 1. Drag **File** widget onto the canvas and load `data/hospital_discharge.csv`
 2. In the **File** widget, set `readmission_30d` as **Target**, `patient_id` and `primary_dx_icd` as **Meta**, and all others as **Feature**
 3. Click **Apply**
 
-**Step 1: Check missing values**
+### Step 1: Completeness — Are all expected values present?
 
 4. Connect **File** → **Column Statistics** (label it "Quality check")
 5. In **Column Statistics**, look at the **Missing** column for each variable
-6. Identify which variables have the highest missingness — does `hba1c` stand out? Why might that be? (Recall Session 2: MNAR — only ordered when diabetes is suspected)
 
-**Step 2: Check value ranges**
+**Questions:**
 
-7. Connect **File** → **Distributions**
-8. Select `heart_rate` — look for any extreme values far outside 40-180 bpm
-9. Select `creatinine` — look for any negative or zero values
-10. Select `wbc` — look for any zero values (a living patient cannot have WBC = 0)
+- Which variables have the highest missingness? Why might that be?
+- For `hba1c`, is the missingness more likely MCAR, MAR, or MNAR? What observed variable might predict whether HbA1c is missing? (Recall Session 2: HbA1c is only ordered when diabetes is suspected)
+- If a demographic variable like `sex` has missing values, what does that suggest about the data extraction process?
 
-**Step 3: Spot implausible records**
+### Step 2: Plausibility — Are the values within physiologically possible ranges?
 
-11. Connect **File** → **Select Rows** (label it "Implausible HR")
+6. Connect **File** → **Distributions**
+7. Select `heart_rate` — look for any extreme values far outside 40-180 bpm
+8. Select `creatinine` — look for any negative or zero values
+9. Select `wbc` — look for any zero values (a living patient cannot have WBC = 0)
+10. Select `hemoglobin`, `systolic_bp`, `hba1c`, `age` — check if any values fall outside the plausible ranges from Session 3
+
+**Questions:**
+
+- If you find a hemoglobin value of 22 g/dL, what would you do? Delete it? Flag it? Check the diagnosis?
+- If creatinine is negative, is this a plausible value or an error?
+- How would you handle a `length_of_stay` of 0 days?
+
+### Step 3: Consistency — Do related variables agree logically?
+
+11. Connect **File** → **Select Rows** (label it "Zero LOS + ICU")
+    - Add conditions: `length_of_stay` equals 0 **AND** `icu_stay` equals Yes
+    - Connect **Matching Data** → **Data Table** — any results? (A patient in the ICU should have stayed at least 1 day)
+12. Connect **File** → **Select Rows** (label it "Normal HbA1c + DM dx")
+    - Add conditions: `hba1c` is less than 5.7 **AND** `primary_dx_icd` equals E11.65
+    - Connect **Matching Data** → **Data Table** — any results? (Non-diabetic HbA1c with a diabetes diagnosis)
+
+**Questions:**
+
+- What would you do if you found a patient with these contradictions — exclude the record, flag it, or investigate the source data?
+- Which variable do you trust more: the lab value or the diagnosis code? Why?
+
+### Step 4: Spot the planted errors
+
+13. Connect **File** → **Select Rows** (label it "Implausible HR")
     - Add condition: `heart_rate` is greater than 300
     - Connect **Matching Data** → **Data Table** to inspect the flagged record
-12. Connect **File** → **Select Rows** (label it "Negative Cr")
+14. Connect **File** → **Select Rows** (label it "Negative Cr")
     - Add condition: `creatinine` is less than 0
     - Connect **Matching Data** → **Data Table** to inspect
 
-> **Note:** The dataset contains three intentionally planted data quality issues: heart rate = 350 (row 10), creatinine = -0.3 (row 47), and WBC = 0.0 (row 203). In real hospital data, you would investigate these with the clinical team. For this course, you will learn to handle them in Meeting 11 using Impute and Formula widgets.
+> **Note:** The dataset contains three intentionally planted data quality issues: heart rate = 350, creatinine = -0.3, and WBC = 0.0. In real hospital data, you would investigate these with the clinical team. For this course, you will learn to handle them in Meeting 11 using Impute and Formula widgets.
 
 [Back to Table of Contents](#table-of-contents)
 
 ---
 
-## Session 7: Lecture — Handling Data Quality Issues (10 min)
+## Session 6: Lecture — Handling Data Quality Issues (15 min)
 
 ### Strategies for Addressing Data Quality Problems
 
