@@ -14,7 +14,7 @@ National Taiwan University of Nursing and Health Sciences
 4. [Session 3: Lecture — Summarizing Categorical Clinical Variables (15 min)](#session-3-lecture--summarizing-categorical-clinical-variables-15-min)
 5. [Session 4: Lecture — The Table 1 Convention (20 min)](#session-4-lecture--the-table-1-convention-20-min)
 6. [Session 5: Lecture — Laboratory Reference Ranges and Clinical Thresholds (15 min)](#session-5-lecture--laboratory-reference-ranges-and-clinical-thresholds-15-min)
-7. [Session 6: Hands-on — Create a Table 1 (30 min)](#session-6-hands-on--create-a-table-1-30-min)
+7. [Session 6: Hands-on — Create a Table 1 in Orange (30 min)](#session-6-hands-on--create-a-table-1-in-orange-30-min)
 
 ---
 
@@ -346,96 +346,73 @@ In clinical data analysis, you often need to convert continuous lab values into 
 
 ---
 
-## Session 6: Hands-on — Create a Table 1 (30 min)
+## Session 6: Hands-on — Create a Table 1 in Orange (30 min)
 
-In this session, you will construct a Table 1 for the hospital discharge dataset by hand (on paper or in a spreadsheet). This is not yet in Orange. The goal is to practice the full decision-making workflow of descriptive clinical analysis before automating it.
+In this session, you will construct a Table 1 for the hospital discharge dataset using Orange, comparing readmitted (readmission_30d = Yes) vs not-readmitted patients.
 
-### The Task
+**Setup:**
 
-Create a Table 1 comparing patients who were readmitted within 30 days (readmission_30d = Yes) versus those who were not (readmission_30d = No).
+1. Open the Meeting 5 workflow (or load `data/hospital_discharge.csv` via **File** widget with `readmission_30d` as **Target**, `patient_id` and `primary_dx_icd` as **Meta**)
 
-### Step 1: Classify Each Variable
+### Step 1: Check distribution shape — normal or skewed?
 
-For each variable in the dataset, determine whether it is continuous or categorical, and if continuous, whether it is likely normally distributed or skewed.
+**Question:** For each continuous variable, is it roughly symmetric or skewed? This determines whether to report mean +/- SD or median [IQR].
 
-| Variable | Type | Distribution | Summary Statistic | Test |
-|----------|------|-------------|-------------------|------|
-| age | Continuous | Normal | Mean +/- SD | t-test |
-| sex | Categorical | — | n (%) | Chi-squared |
-| admission_type | Categorical | — | n (%) | Chi-squared |
-| charlson_score | Continuous | Skewed | Median [IQR] | Wilcoxon |
-| length_of_stay | Continuous | Skewed | Median [IQR] | Wilcoxon |
-| wbc | Continuous | Skewed | Median [IQR] | Wilcoxon |
-| hemoglobin | Continuous | Normal | Mean +/- SD | t-test |
-| creatinine | Continuous | Skewed | Median [IQR] | Wilcoxon |
-| hba1c | Continuous | Skewed | Median [IQR] | Wilcoxon |
-| systolic_bp | Continuous | Normal | Mean +/- SD | t-test |
-| heart_rate | Continuous | Normal | Mean +/- SD | t-test |
-| n_medications | Continuous | Skewed | Median [IQR] | Wilcoxon |
-| icu_stay | Categorical | — | n (%) | Chi-squared |
+**In Orange:**
 
-### Step 2: Compute Summary Statistics
+2. Connect **File** → **Distributions**
+3. Select each continuous variable one by one: `age`, `charlson_score`, `length_of_stay`, `wbc`, `hemoglobin`, `creatinine`, `hba1c`, `systolic_bp`, `heart_rate`, `n_medications`
+4. For each, note whether the distribution is roughly symmetric (bell-shaped) or skewed (long tail to the right)
 
-Using the dataset (or provided summary values), fill in the following table. For each variable:
+> **Note:** You will likely see that `age`, `hemoglobin`, `systolic_bp`, and `heart_rate` are roughly symmetric, while `charlson_score`, `length_of_stay`, `wbc`, `creatinine`, `hba1c`, and `n_medications` are right-skewed.
 
-- Calculate the summary statistic for the overall sample
-- Calculate the summary statistic for the readmitted group
-- Calculate the summary statistic for the not-readmitted group
+### Step 2: Compare continuous variables between groups
 
-| Variable | Overall (N=___) | Readmitted (n=___) | Not Readmitted (n=___) |
-|----------|----------------|-------------------|----------------------|
-| Age, years, mean +/- SD | | | |
-| Sex, n (%) | | | |
-|   Male | | | |
-|   Female | | | |
-| Admission type, n (%) | | | |
-|   Emergency | | | |
-|   Elective | | | |
-|   Urgent | | | |
-| Charlson score, median [IQR] | | | |
-| Length of stay, days, median [IQR] | | | |
-| WBC, 10^3/uL, median [IQR] | | | |
-| Hemoglobin, g/dL, mean +/- SD | | | |
-| Creatinine, mg/dL, median [IQR] | | | |
-| HbA1c, %, median [IQR] | | | |
-| Systolic BP, mmHg, mean +/- SD | | | |
-| Heart rate, bpm, mean +/- SD | | | |
-| Number of medications, median [IQR] | | | |
-| ICU stay, n (%) | | | |
+**Question:** Do lab values, age, length of stay differ between readmitted and not-readmitted patients?
 
-### Step 3: Select and Apply the Right Test
+**In Orange:**
 
-For each variable, apply the appropriate statistical test (from the table in Step 1) and record the p-value.
+5. Connect **File** → **Box Plot**
+6. Set **Subgroups** to `readmission_30d`
+7. Select `age` — compare the median and spread between Yes and No groups
+8. Repeat for `charlson_score`, `length_of_stay`, `wbc`, `hemoglobin`, `creatinine`, `systolic_bp`, `heart_rate`, `n_medications`
+9. For each variable, note: Is the readmitted group visually higher, lower, or similar?
 
-**Decision rules:**
+### Step 3: Compare categorical variables between groups
 
-- Continuous + normal distribution: t-test. Report p-value.
-- Continuous + skewed distribution: Wilcoxon rank-sum test. Report p-value.
-- Categorical with all expected cell counts >= 5: Chi-squared test. Report p-value.
-- Categorical with any expected cell count < 5: Fisher's exact test. Report p-value.
+**Question:** Are admission type, ICU stay, and sex distributed differently between readmitted and not-readmitted patients?
 
-### Step 4: Interpret Your Table 1
+**In Orange:**
 
-After completing the table, answer the following questions:
+10. Connect **File** → **Mosaic Display**
+11. Set variables to `readmission_30d` and `icu_stay` — are ICU patients over-represented among readmissions?
+12. Change to `readmission_30d` and `admission_type` — are emergency admissions over-represented?
+13. Change to `readmission_30d` and `sex` — is there a sex difference?
+14. For each, note: Does the tile size suggest an association, or are the proportions roughly equal?
 
-1. **Which variables differ significantly between readmitted and not-readmitted patients?** List all variables with p < 0.05.
+### Step 4: Get exact summary statistics
 
-2. **What is the clinical profile of readmitted patients?** Based on the summary statistics, describe the "typical" readmitted patient compared to the "typical" non-readmitted patient. For example: "Readmitted patients were older (mean 72 vs 68 years), had higher comorbidity burden (median Charlson 3 vs 2), longer hospital stays (median 8 vs 5 days), and were more likely to have been admitted through the emergency department (47% vs 33%)."
+**Question:** What are the actual numbers for each group?
 
-3. **Are there any variables that do NOT differ between groups?** What does this tell you? For example, if sex does not differ, it suggests readmission risk is not strongly associated with sex in this population.
+**In Orange:**
 
-4. **Based on this descriptive analysis, which variables would you prioritize as predictors in a readmission prediction model?** Justify your choices based on both statistical significance and clinical plausibility.
+15. Connect **File** → **Select Rows** (label it "Readmitted")
+    - Add condition: `readmission_30d` equals Yes
+    - Connect **Matching Data** → **Column Statistics** (label it "Readmitted stats")
+16. Connect **File** → **Select Rows** (label it "Not readmitted")
+    - Add condition: `readmission_30d` equals No
+    - Connect **Matching Data** → **Column Statistics** (label it "Not readmitted stats")
+17. Compare the **Mean**, **Median**, **Min**, **Max** columns side by side between the two Column Statistics widgets
 
-### Step 5: Check Your Work
+### Step 5: Interpret your findings
 
-Common mistakes in Table 1 construction:
+**Questions:**
 
-- **Wrong denominator for percentages.** Column percentages should sum to 100% within each group, not across groups.
-- **Wrong summary statistic for the distribution.** If you used mean +/- SD for a skewed variable (e.g., length of stay), the mean will overestimate the "typical" value.
-- **Mismatched test and summary statistic.** If you report median [IQR], the test should be Wilcoxon, not t-test.
-- **Reporting overall p-value for multi-category variables.** For admission_type (3 categories), report one p-value for the overall chi-squared test, not separate p-values for each category.
-- **Forgetting to state the sample size in each column header.** Always include N (overall) and n (per group).
+1. Which variables show the largest visual differences between groups in Box Plot?
+2. What is the clinical profile of readmitted patients? Describe in one sentence (e.g., "Readmitted patients were older, had higher comorbidity, longer stays, and were more likely to have ICU involvement").
+3. Are there any variables that do NOT differ between groups? What does this tell you?
+4. Based on this descriptive analysis, which variables would you prioritize as predictors in a readmission prediction model?
 
-> **Note:** Constructing Table 1 by hand before using software builds the clinical reasoning skills that no tool can automate. When you later use Orange or statistical software to generate Table 1, you will understand what each number means and can catch errors that the software will not flag.
+> **Note:** Orange does not compute p-values or generate a formatted Table 1 automatically. The visual comparisons (Box Plot, Mosaic Display) and group-level summary statistics (Column Statistics) give you the same information. For a publication-ready Table 1 with p-values, you would use R or Python — but the clinical reasoning you practiced here is the same regardless of tool.
 
 [Back to Table of Contents](#table-of-contents)
