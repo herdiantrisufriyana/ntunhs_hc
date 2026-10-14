@@ -387,10 +387,12 @@ In this session, you will construct a Table 1 for the hospital discharge dataset
 **In Orange:**
 
 10. Connect **File** → **Mosaic Display**
-11. Set variables to `readmission_30d` and `icu_stay` — are ICU patients over-represented among readmissions?
-12. Change to `readmission_30d` and `admission_type` — are emergency admissions over-represented?
-13. Change to `readmission_30d` and `sex` — is there a sex difference?
-14. For each, note: Does the tile size suggest an association, or are the proportions roughly equal?
+11. **Uncheck "Compare with total"** — this shows a clean grid where tile size = proportion. (With it checked, Orange overlays reference bars that split each tile visually, making a 2x2 look like 8 boxes.)
+12. Set variables to `readmission_30d` and `icu_stay` — are ICU patients over-represented among readmissions? Compare the ICU=Yes share in the readmission=Yes column vs the readmission=No column.
+13. Change to `readmission_30d` and `admission_type` — are emergency admissions over-represented?
+14. Change to `readmission_30d` and `sex` — is there a sex difference?
+15. For each, note: Does the tile size suggest an association, or are the proportions roughly equal?
+16. Optionally, check **"Compare with total"** to see deviation coloring — red tiles have more cases than expected under independence, blue tiles have fewer.
 
 ### Step 4: Get exact summary statistics
 

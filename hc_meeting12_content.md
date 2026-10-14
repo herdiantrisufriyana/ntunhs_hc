@@ -169,8 +169,9 @@ All visualizations in this session connect from the final cleaned Data Table out
 - Instead, use a **Mosaic Display** — a grid of rectangles where:
   - **Tile width** represents the proportion of one variable's categories
   - **Tile height** represents the proportion of the other variable's categories within each column
-  - **Tile color** represents the **deviation from expected** — how much the observed count differs from what you would expect if the two variables were independent
-- Reading a mosaic display:
+  - **Tile area** represents the count — larger tiles = more patients in that combination
+- Start with **"Compare with total" unchecked** to see a clean grid where only tile size matters. This avoids confusion from extra reference bars that split tiles visually.
+- Once comfortable with the basic grid, check **"Compare with total"** to add deviation coloring:
   - **Blue tiles** = more observations than expected (positive association)
   - **Red tiles** = fewer observations than expected (negative association)
   - **Equal-sized tiles with no color** = no association (independence)
@@ -188,13 +189,15 @@ All visualizations in this session connect from the final cleaned Data Table out
 **Widgets:** Mosaic Display
 
 1. Connect **Cleaned data** → **Mosaic Display** via **Selected Data → Data**
-2. Set the variables to **admission_type** and **readmission_30d**
+2. **Uncheck "Compare with total"** to see a clean grid first
+3. Set the variables to **admission_type** and **readmission_30d**
    - Look at the tile sizes: are emergency admissions readmitted at a different rate than elective admissions?
-   - Check tile colors: blue means more than expected, red means fewer than expected
-   - If the emergency-readmitted tile is blue, it suggests emergency patients are readmitted more often than expected by chance
-3. Change the variables to **icu_stay** and **readmission_30d**
-   - Is ICU stay associated with readmission?
-   - A blue tile for icu_stay=Yes and readmission_30d=Yes would suggest ICU patients are readmitted more frequently
+   - Compare the proportion of each admission type within the readmission=Yes column vs the readmission=No column
+4. Change the variables to **icu_stay** and **readmission_30d**
+   - Is the ICU=Yes tile proportionally taller in the readmission=Yes column?
+5. Now check **"Compare with total"** to see deviation coloring
+   - Blue means more than expected, red means fewer than expected
+   - If the icu_stay=Yes + readmission_30d=Yes tile is blue, it confirms ICU patients are readmitted more often than expected
 4. Change to **diabetes_flag** and **readmission_30d**
    - Is diabetes associated with higher readmission?
    - Diabetes is a well-known risk factor for hospital readmission — does the mosaic display confirm this?
