@@ -170,11 +170,9 @@ All visualizations in this session connect from the final cleaned Data Table out
   - **Tile width** represents the proportion of one variable's categories
   - **Tile height** represents the proportion of the other variable's categories within each column
   - **Tile area** represents the count — larger tiles = more patients in that combination
-- Start with **"Compare with total" unchecked** to see a clean grid where only tile size matters. This avoids confusion from extra reference bars that split tiles visually.
-- Once comfortable with the basic grid, check **"Compare with total"** to add deviation coloring:
-  - **Blue tiles** = more observations than expected (positive association)
-  - **Red tiles** = fewer observations than expected (negative association)
-  - **Equal-sized tiles with no color** = no association (independence)
+- **Uncheck "Compare with total"** to see a clean grid where only tile size matters. With it checked, Orange overlays reference bars that split tiles visually and can be confusing.
+- Set **Interior Coloring** to the x-axis variable — each column gets a distinct color, making it easy to compare proportions across rows.
+- If both variables are independent (no association), the row proportions will be the same in every column — the tiles will have the same height ratios regardless of column.
 - Example: if ICU patients are readmitted more often than expected, the ICU-readmitted tile will be blue (larger than expected) and the ICU-not-readmitted tile will be red (smaller than expected)
 - Mosaic displays are essentially visual contingency tables — they show the same information as a chi-squared test but in a form you can see instantly
 
@@ -189,15 +187,13 @@ All visualizations in this session connect from the final cleaned Data Table out
 **Widgets:** Mosaic Display
 
 1. Connect **Cleaned data** → **Mosaic Display** via **Selected Data → Data**
-2. **Uncheck "Compare with total"** to see a clean grid first
-3. Set the variables to **admission_type** and **readmission_30d**
+2. **Uncheck "Compare with total"** — avoids reference bars that split tiles visually
+3. Set **Interior Coloring** to the first variable (the x-axis variable, e.g., **readmission_30d**) — each column gets a distinct color so proportion differences across rows are easy to see
+4. Set the variables to **admission_type** and **readmission_30d**
    - Look at the tile sizes: are emergency admissions readmitted at a different rate than elective admissions?
    - Compare the proportion of each admission type within the readmission=Yes column vs the readmission=No column
-4. Change the variables to **icu_stay** and **readmission_30d**
+5. Change the variables to **icu_stay** and **readmission_30d**
    - Is the ICU=Yes tile proportionally taller in the readmission=Yes column?
-5. Now check **"Compare with total"** to see deviation coloring
-   - Blue means more than expected, red means fewer than expected
-   - If the icu_stay=Yes + readmission_30d=Yes tile is blue, it confirms ICU patients are readmitted more often than expected
 4. Change to **diabetes_flag** and **readmission_30d**
    - Is diabetes associated with higher readmission?
    - Diabetes is a well-known risk factor for hospital readmission — does the mosaic display confirm this?
