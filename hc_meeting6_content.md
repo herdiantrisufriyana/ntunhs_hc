@@ -352,7 +352,9 @@ In this session, you will construct a Table 1 for the hospital discharge dataset
 
 **Setup:**
 
-1. Open the Meeting 5 workflow (or load `data/hospital_discharge.csv` via **File** widget with `readmission_30d` as **Target**, `patient_id` and `primary_dx_icd` as **Meta**)
+1. Drag **File** widget onto the canvas and load `data/hospital_discharge.csv`
+2. In the **File** widget, set `readmission_30d` as **Target**, `patient_id` and `primary_dx_icd` as **Meta**, and all others as **Feature**
+3. Click **Apply**
 
 ### Step 1: Check distribution shape — normal or skewed?
 
