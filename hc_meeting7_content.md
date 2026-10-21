@@ -235,10 +235,17 @@ Clinical measurements have inherent variability:
 | Weight | Clothing, time of day, fluid status |
 | Temperature | Oral vs. axillary vs. tympanic vs. rectal |
 
-**Non-differential vs. differential measurement error:**
+**Classifying measurement error (relative to the relationship of interest):**
 
-- **Non-differential:** The error is equally distributed across comparison groups. This usually biases results toward the null (makes it harder to find a true association).
-- **Differential:** The error is systematically different between groups. This can bias results in either direction and is more dangerous.
+Like confounder/mediator/collider, measurement error classification depends on which relationship you are studying. Two independent dimensions:
+
+- **Independent vs dependent:** Do errors in two measured variables in your analysis share a common source? Independent = separate sources. Dependent = shared source (e.g., patient agitation inflates both blood pressure and heart rate readings simultaneously).
+- **Non-differential vs differential:** Does the error in a measured variable depend only on its own actual value, or also on another actual variable in the relationship? Non-differential = depends only on its own actual value. Differential = depends on another actual variable (e.g., lab error depends on actual ICU status because ICU uses point-of-care devices while the ward uses the central lab).
+
+Effects on the estimated association:
+
+- **Non-differential** → biases **toward the null** (true effects become harder to detect)
+- **Differential** → biases **in either direction** — can mask a real effect OR create a false one. For example, if X has no actual effect on Y, but X affects the measurement error in Y, the analysis may detect a spurious association between X and measured Y.
 
 > **Note:** Information bias is often invisible in the dataset. You cannot see it by looking at summary statistics. It requires clinical knowledge to recognize. Always ask: "Was this variable measured the same way in all patients?" If not, the comparison may be unfair.
 
