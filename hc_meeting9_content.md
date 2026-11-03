@@ -19,15 +19,13 @@ National Taiwan University of Nursing and Health Sciences
 
 ## 1. Overview
 
-This is the **midterm assessment** for the Hospital Clinical Data Analysis course, worth **25% of the final grade**.
-
-The study plan is a written document where you design a clinical data analysis from scratch. You will define a clinical question, identify the hospital data needed to answer it, specify the study population and variables, plan the analytical approach, and consider ethical and methodological issues.
+The study plan is worth **25% of the final grade** and is part of the capstone project. It is a written document where you design a clinical data analysis from scratch. You will define a clinical question, identify the hospital data needed to answer it, specify the study population and variables, plan the analytical approach, and consider ethical and methodological issues.
 
 **Purpose:** The study plan demonstrates your ability to integrate the foundational knowledge from Meetings 01-08 into a coherent analysis design. It tests whether you can translate a clinical question into a structured, executable research plan using hospital data.
 
-**Connection to the capstone (Meeting 15):** The study plan is the blueprint for your capstone project. In Meetings 10-14, you will learn to use Orange for data loading, cleaning, visualization, comparative analysis, and outcome modeling. In Meeting 15, you will present the results of actually carrying out the analysis you designed here. A well-constructed study plan makes the capstone straightforward; a poorly defined plan leads to confusion during execution.
+**Connection to the capstone (Meeting 15):** The study plan is the design component of your capstone project. Your capstone report will include the study plan plus the analysis results. In Meetings 10-14, you will learn to use Orange for data loading, cleaning, visualization, comparative analysis, and outcome modeling. In Meeting 15, you will present the results of carrying out the analysis you designed here. A well-constructed study plan makes the capstone straightforward; a poorly defined plan leads to confusion during execution.
 
-> **Note:** You are not required to perform any analysis for this submission. The study plan is a design document only. The analysis itself happens during Meetings 10-14 and is presented at Meeting 15.
+**Submit early, revise to reach A:** The study plan can be submitted any time up to the capstone due date (Meeting 15). You are encouraged to submit as early as possible — the instructor will provide feedback and you can revise and resubmit until the due date. Earlier submission gives you more revision cycles to improve your grade.
 
 [Back to Table of Contents](#table-of-contents)
 
@@ -67,14 +65,13 @@ Define who is included and excluded from the analysis. Use specific clinical cod
 - Age range, admission type, or time constraints
 - Example: "Adults (age >= 18) admitted with a primary diagnosis of heart failure (ICD-10: I50.0, I50.1, I50.9) between January 2020 and December 2023"
 
-**Exclusion criteria** — conditions that remove a patient from the study:
+**Exclusion criteria (if any)** — conditions that happen AFTER enrollment but are known BEFORE the outcome. Unlike inclusion criteria (known at the index date), exclusion criteria remove patients based on events that occur between the index date and the outcome window.
 
-- Patients with missing key variables
-- Patients transferred to another facility (incomplete outcome data)
-- Specific diagnoses that confound the analysis
-- Example: "Exclude patients who died during the index admission, patients transferred to another acute care facility, and patients with a length of stay less than 1 day"
+- Example: "Exclude patients discharged to hospice (readmission is not a meaningful outcome for end-of-life patients)" — determined during admission, known at discharge, but not known at admission.
+- Example: "Exclude patients with a planned readmission scheduled at discharge" — determined during admission, known at discharge.
+- Not all studies need exclusion criteria. If no post-enrollment events would invalidate the outcome, exclusion criteria may be empty.
 
-> **Note:** Use specific ICD-10, ATC (medication classification), or LOINC (lab test) codes wherever possible. Vague criteria like "patients with heart problems" are insufficient. Specific codes ensure reproducibility and make it clear exactly which patients are captured.
+> **Note:** Do not confuse exclusion criteria with inclusion criteria. Conditions known at the index date (e.g., age, diagnosis, discharge status, transfer status) belong in the inclusion criteria. See Meeting 04 for the distinction. Use specific ICD-10, ATC, or LOINC codes wherever possible.
 
 ### 2.4 Variable Definitions
 
@@ -198,8 +195,8 @@ The following is a brief worked example using the hospital discharge dataset fro
 
 **Study Population:**
 
-- Inclusion: Adults (age >= 18) with a primary discharge diagnosis of heart failure (ICD-10: I50.0, I50.1, I50.9), admitted between January 2020 and December 2023
-- Exclusion: Patients who died during the index admission, patients transferred to another acute care facility, patients with a length of stay less than 1 day (outpatient observation)
+- Inclusion: Adults (age >= 18) discharged alive from an admission with a primary diagnosis of heart failure (ICD-10: I50.0, I50.1, I50.9), between January 2020 and December 2023. Not transferred to another facility. Length of stay >= 1 day. (All known at the index date = discharge.)
+- Exclusion (if any): Patients discharged to hospice or palliative care (readmission is not a meaningful outcome). Patients with a planned cardiac procedure readmission scheduled at discharge. (Both determined during admission, known at discharge but not at admission.)
 
 ---
 
@@ -249,11 +246,11 @@ The following is a brief worked example using the hospital discharge dataset fro
 
 - **Format:** Submit as PDF or DOCX
 - **Length:** No strict page limit, but a well-structured plan typically requires 3-5 pages
-- **Platform:** Submit via iCLASS by the end of Meeting 09 (Week 9)
+- **Platform:** Submit via iCLASS
+- **Due date:** Same as the capstone (Meeting 15, Week 15). However, submit as early as possible to receive feedback and revise.
 - **File naming:** Use the format `StudentID_StudyPlan.pdf` or `StudentID_StudyPlan.docx`
-- **Late submissions:** Late submissions will receive a maximum grade of C unless prior arrangements are made with the instructor
 
-> **Note:** Start your study plan early. The clinical question and variable definitions require careful thought. Use the example in Section 4 as a structural template, but choose your own clinical question and dataset design.
+> **Note:** Start your study plan early. The instructor will provide feedback on each submission, and you can revise and resubmit until the due date. More revision cycles = more opportunities to reach grade A. The clinical question and variable definitions require careful thought. Use the example in Section 4 as a structural template, but choose your own clinical question and dataset design.
 
 [Back to Table of Contents](#table-of-contents)
 
@@ -265,16 +262,15 @@ The following table maps each section of the study plan to the meeting(s) whose 
 
 | Study Plan Section | Relevant Meeting(s) | Key Content |
 |--------------------|----------------------|-------------|
-| Clinical Question | Meeting 01: Introduction to Hospital Clinical Data | Types of clinical questions answerable with hospital data |
-| Data Source Description | Meeting 02: Hospital Information Systems and Data Sources | HIS, LIS, pharmacy systems, data extraction |
-| Study Population (inclusion/exclusion criteria) | Meeting 05: Study Design for Clinical Data | Cohort definition, ICD-10/ATC/LOINC coding, inclusion/exclusion |
-| Variable Definitions | Meeting 04: Descriptive Statistics for Clinical Variables | Variable types, roles, clinical measurement conventions |
-| Variable Definitions (codes) | Meeting 05: Study Design for Clinical Data | ICD-10, ATC, LOINC code systems |
-| Data Quality Assessment | Meeting 06: Data Quality and Plausibility Checks | Missing data, implausible values, distribution checks |
-| Analytical Approach (descriptive) | Meeting 04: Descriptive Statistics for Clinical Variables | Summarizing continuous and categorical variables |
-| Analytical Approach (comparative) | Meeting 08: Analytical Methods for Clinical Data | Chi-squared, t-test, Mann-Whitney, comparative analysis |
-| Analytical Approach (modeling) | Meeting 08: Analytical Methods for Clinical Data | Logistic regression, odds ratios, model evaluation |
-| Ethical Considerations | Meeting 03: Data Governance and Ethics (PDPA) | De-identification, PDPA, IRB, data governance |
-| Potential Biases and Limitations | Meeting 07: Bias and Confounding in Clinical Studies | Selection bias, information bias, confounding, generalizability |
+| Clinical Question | Meeting 01: Introduction to Hospital Clinical Data Systems | Types of clinical data, what questions hospital data can answer |
+| Data Source Description | Meeting 01 + Meeting 02: Clinical Coding and Terminology Standards | Hospital information systems (HIS, LIS, PACS), ICD-10, ATC, LOINC |
+| Study Population (inclusion/exclusion) | Meeting 04: Clinical Study Design with Hospital Data | Cohort definition, inclusion vs exclusion criteria, index date |
+| Variable Definitions | Meeting 02 + Meeting 04 | Clinical codes (ICD-10, ATC, LOINC) for variable specification, exposure/outcome/covariate roles |
+| Data Quality Assessment | Meeting 05: Data Quality Assessment in Clinical Settings | Missing data mechanisms, plausibility checks, data audit |
+| Analytical Approach (descriptive) | Meeting 06: Descriptive Analysis of Clinical Variables | Table 1, summary statistics, lab reference ranges |
+| Analytical Approach (comparative) | Meeting 07: Comparative Clinical Analysis and Confounding | Group comparisons, confounding, stratification |
+| Analytical Approach (modeling) | Meeting 08: Outcome Measurement and Clinical Endpoints | Clinical outcomes, Charlson index, outcome operationalization |
+| Ethical Considerations | Meeting 03: Data Governance, Privacy, and Ethics | De-identification, Taiwan PDPA, IRB, data governance |
+| Potential Biases and Limitations | Meeting 07: Comparative Clinical Analysis and Confounding | Selection bias, information bias (nondiff/diff), confounding |
 
 [Back to Table of Contents](#table-of-contents)
