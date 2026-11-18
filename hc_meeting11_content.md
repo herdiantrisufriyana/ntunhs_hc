@@ -167,7 +167,14 @@ Where:
 - **max(Scr/K, 1)** = the greater of Scr/K or 1
 - **Age** in years
 
-An eGFR below 60 mL/min/1.73 m² indicates CKD stage 3 or worse.
+| eGFR (mL/min/1.73 m²) | Stage | Interpretation |
+|------------------------|-------|----------------|
+| >= 90 | Normal or Stage 1 | Normal or mildly increased |
+| 60-89 | Stage 2 | Mildly decreased |
+| 45-59 | Stage 3a | Mildly to moderately decreased |
+| 30-44 | Stage 3b | Moderately to severely decreased |
+| 15-29 | Stage 4 | Severely decreased |
+| < 15 | Stage 5 | Kidney failure |
 
 **Example:** Male, age 65, creatinine 1.2 mg/dL:
 
