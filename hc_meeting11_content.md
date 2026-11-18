@@ -199,9 +199,9 @@ Where:
 
 ### Step 2: Create diabetes_flag
 
-1. In the **Formula** widget, click **Add** (or the "+" button) to create a new variable.
-2. Set the variable name to `diabetes_flag`.
-3. Enter the following expression:
+1. In the **Formula** widget, click **New** → select **Numeric**.
+2. In the name field, type `diabetes_flag`.
+3. In the **Expression** field, enter:
 
 ```
 1 if hba1c >= 6.5 else 0
@@ -213,9 +213,9 @@ Where:
 
 ### Step 3: Create leukocytosis
 
-1. Click **Add** to create another new variable.
-2. Set the variable name to `leukocytosis`.
-3. Enter the following expression:
+1. Click **New** → **Numeric**.
+2. In the name field, type `leukocytosis`.
+3. In the **Expression** field, enter:
 
 ```
 1 if wbc > 11 else 0
@@ -225,9 +225,9 @@ Where:
 
 ### Step 4: Create anemia (Sex-Specific)
 
-1. Click **Add** to create another new variable.
-2. Set the variable name to `anemia`.
-3. Enter the following expression:
+1. Click **New** → **Numeric**.
+2. In the name field, type `anemia`.
+3. In the **Expression** field, enter:
 
 ```
 1 if (sex == "F" and hemoglobin < 12) or (sex == "M" and hemoglobin < 13) else 0
@@ -239,9 +239,9 @@ Where:
 
 ### Step 5: Create hypertension
 
-1. Click **Add** to create another new variable.
-2. Set the variable name to `hypertension`.
-3. Enter the following expression:
+1. Click **New** → **Numeric**.
+2. In the name field, type `hypertension`.
+3. In the **Expression** field, enter:
 
 ```
 1 if systolic_bp >= 140 else 0
@@ -251,9 +251,9 @@ Where:
 
 ### Step 6: Create age_group
 
-1. Click **Add** to create another new variable.
-2. Set the variable name to `age_group`.
-3. Enter the following expression:
+1. Click **New** → **Text** (this is a categorical string variable).
+2. In the name field, type `age_group`.
+3. In the **Expression** field, enter:
 
 ```
 "18-44" if age < 45 else ("45-64" if age < 65 else ("65-79" if age < 80 else "80+"))
@@ -265,9 +265,9 @@ Where:
 
 ### Step 7: Create high_comorbidity
 
-1. Click **Add** to create another new variable.
-2. Set the variable name to `high_comorbidity`.
-3. Enter the following expression:
+1. Click **New** → **Numeric**.
+2. In the name field, type `high_comorbidity`.
+3. In the **Expression** field, enter:
 
 ```
 1 if charlson_score >= 3 else 0
