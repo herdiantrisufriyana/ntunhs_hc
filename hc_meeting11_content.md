@@ -305,7 +305,7 @@ Clinical studies define inclusion criteria to specify which patients belong in t
 
 1. In the **Select Rows** widget, click **Add Condition**.
 2. Select the variable `age` from the dropdown.
-3. Set the operator to `>=` (is greater than or equal to).
+3. Set the operator to **is at least**.
 4. Enter the value `18`.
 5. This ensures only adult patients (age 18 and older) are included.
 
@@ -315,7 +315,7 @@ Exclusion criteria remove patients who do not fit the study design:
 
 1. Click **Add Condition** again.
 2. Select the variable `length_of_stay`.
-3. Set the operator to `>=`.
+3. Set the operator to **is at least**.
 4. Enter the value `1`.
 5. This removes outpatient encounters or same-day discharges (length_of_stay < 1 day), which represent a different clinical population than inpatient stays.
 
