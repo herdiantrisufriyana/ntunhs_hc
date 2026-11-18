@@ -365,13 +365,13 @@ When researchers need a comprehensive dataset for analysis, they must extract da
 
 ### Types of Joins
 
-| Join Type | Result | When to Use |
-|-----------|--------|-------------|
-| Inner join | Only rows that match in both datasets | When you need complete data from both sources |
-| Left join | All rows from the first dataset, matched rows from the second (unmatched rows get missing values) | When you want to keep all patients even if they lack records in the second source |
-| Outer join | All rows from both datasets | When you want a complete picture, accepting missing values |
+| Standard Term | Orange Merge Data Option | Result | When to Use |
+|---------------|--------------------------|--------|-------------|
+| Inner join | Find matching pairs of rows | Only rows that match in both datasets | When you need complete data from both sources |
+| Left join | Append columns from Extra data | All rows from the primary dataset, matched columns from Extra data (unmatched rows get missing values) | When you want to keep all patients even if they lack records in the second source |
+| Union / stack | Concatenate tables | All rows from both datasets stacked vertically | When both datasets have the same columns and you want to combine rows |
 
-> **Note:** In Orange, the **Merge Data** widget supports these join types. For clinical data, a left join is often the safest choice: keep all patients from your primary cohort and accept missing values for those without records in the secondary data source.
+> **Note:** For clinical data, **Append columns from Extra data** (left join) is often the safest choice: keep all patients from your primary cohort and accept missing values for those without records in the secondary data source.
 
 [Back to Table of Contents](#table-of-contents)
 
@@ -404,7 +404,7 @@ The second CSV file (e.g., `medication_details.csv`) contains:
 2. Connect the **Select Rows** widget (from your main workflow) to the **Merge Data** widget via **Matching Data -> Data**.
 3. Connect the new **File** widget (medication data) to the **Merge Data** widget via **Data -> Extra Data**.
 
-> **Note:** The connection order matters. The first input (**Data**) is the primary dataset. The second input (**Extra Data**) is the dataset being merged in. In a left join, all rows from **Data** are kept.
+> **Note:** The connection order matters. The first input (**Data**) is the primary dataset. The second input (**Extra Data**) is the dataset being merged in. With **Append columns from Extra data**, all rows from **Data** are kept.
 
 ### Step 3: Configure the Merge
 
@@ -419,7 +419,7 @@ The second CSV file (e.g., `medication_details.csv`) contains:
 1. Drag a new **Data Table** widget onto the canvas.
 2. Connect **Merge Data** to this **Data Table** via **Data -> Data**.
 3. Double-click the **Data Table** widget and check the following:
-   - The row count should match the row count from **Select Rows** (since we used a left join, no patients are lost).
+   - The row count should match the row count from **Select Rows** (since we used **Append columns from Extra data**, no patients are lost).
    - Scroll right to find the new columns: polypharmacy and high_risk_meds.
    - Check a few patients: those present in both datasets should have values for the new columns; those absent from the medication file should show missing values.
 
