@@ -145,7 +145,29 @@ Raw clinical values are continuous measurements. But clinical decisions are ofte
 
 ### A Note on eGFR
 
-Estimated glomerular filtration rate (eGFR) is derived from creatinine, age, and sex using the CKD-EPI equation. The full CKD-EPI formula is complex and not straightforward to implement in the Orange Formula widget. In practice, eGFR is often pre-calculated in the electronic health record. For this course, we will note the concept but focus on simpler derived variables that the Formula widget can handle directly.
+Estimated glomerular filtration rate (eGFR) is derived from creatinine, age, and sex using the 2021 CKD-EPI equation (race-free). The full formula is complex and not straightforward to implement in the Orange Formula widget. In practice, eGFR is often pre-calculated in the electronic health record. For this course, we will note the concept but focus on simpler derived variables that the Formula widget can handle directly.
+
+**CKD-EPI 2021 equation (standard math):**
+
+$$\text{eGFR} = 142 \times \min\!\left(\frac{S_{cr}}{\kappa},\;1\right)^{\alpha} \times \max\!\left(\frac{S_{cr}}{\kappa},\;1\right)^{-1.200} \times 0.9938^{\text{Age}} \times 1.012\;[\text{if female}]$$
+
+**Plain text:**
+
+```
+eGFR = 142 * min(Scr/K, 1)^alpha * max(Scr/K, 1)^(-1.200) * 0.9938^Age * 1.012 [if female]
+```
+
+Where:
+
+- **eGFR** = estimated glomerular filtration rate (mL/min/1.73 m²)
+- **Scr** = serum creatinine (mg/dL, IDMS-standardized)
+- **K** = 0.7 (female) or 0.9 (male)
+- **alpha** = -0.241 (female) or -0.302 (male)
+- **min(Scr/K, 1)** = the lesser of Scr/K or 1
+- **max(Scr/K, 1)** = the greater of Scr/K or 1
+- **Age** in years
+
+An eGFR below 60 mL/min/1.73 m² indicates CKD stage 3 or worse.
 
 > **Note:** The thresholds above are simplified for teaching purposes. In clinical research, thresholds may vary by guideline version, patient population, and study design. Always document which thresholds and guidelines you used.
 
