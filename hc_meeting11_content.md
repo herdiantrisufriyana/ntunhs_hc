@@ -329,9 +329,9 @@ Exclusion criteria remove patients who do not fit the study design:
 
 ### Step 5: Access Filtered-Out Rows (Optional)
 
-1. The **Select Rows** widget has two outputs: **Matching Data** and **Non-Matching Data**.
+1. The **Select Rows** widget has two outputs: **Matching Data** and **Unmatched Data**.
 2. If you want to inspect excluded patients, drag another **Data Table** widget onto the canvas.
-3. Connect **Select Rows** to this **Data Table** via **Non-Matching Data -> Data**.
+3. Connect **Select Rows** to this **Data Table** via **Unmatched Data -> Data**.
 4. Open it to see which patients were excluded and why.
 
 > **Note:** Documenting the number of patients excluded at each step is standard practice in clinical research. This is typically reported in a CONSORT-style flow diagram: total patients -> excluded (with reasons) -> final study population.
@@ -437,7 +437,7 @@ And optional diagnostic branches:
 
 - **File** -> **Column Statistics** (before imputation)
 - **Impute** -> **Column Statistics** (after imputation)
-- **Select Rows** -> **Data Table** (non-matching data, via **Non-Matching Data** output)
+- **Select Rows** -> **Data Table** (non-matching data, via **Unmatched Data** output)
 
 > **Note:** Save your Orange workflow (.ows file) at this point. Meeting 12 will build on this cleaned, transformed, and merged dataset to perform exploratory analysis and build predictive models for 30-day readmission.
 
