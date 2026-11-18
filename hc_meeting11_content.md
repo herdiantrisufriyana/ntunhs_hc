@@ -323,10 +323,9 @@ Exclusion criteria remove patients who do not fit the study design:
 
 ### Step 4: Check Row Counts Before and After Filtering
 
-1. Look at the status bar of the **Select Rows** widget. It shows how many rows match the conditions and how many are filtered out.
-2. Connect **Select Rows** to a new **Data Table** widget via **Matching Data -> Data**.
-3. Open this **Data Table** and verify the row count.
-4. Compare this with the row count in the **Data Table** connected to the **Formula** widget (before filtering).
+1. Connect **Select Rows** to a new **Data Table** widget via **Matching Data -> Data**.
+2. Open this **Data Table** and verify the row count.
+3. Compare this with the row count in the **Data Table** connected to the **Formula** widget (before filtering).
 
 ### Step 5: Access Filtered-Out Rows (Optional)
 
