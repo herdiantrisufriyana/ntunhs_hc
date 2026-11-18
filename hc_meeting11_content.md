@@ -169,6 +169,13 @@ Where:
 
 An eGFR below 60 mL/min/1.73 m² indicates CKD stage 3 or worse.
 
+**Example:** Male, age 65, creatinine 1.2 mg/dL:
+
+- Scr/K = 1.2 / 0.9 = 1.33
+- min(1.33, 1) = 1, so 1^(-0.302) = 1
+- max(1.33, 1) = 1.33, so 1.33^(-1.200) = 0.719
+- 142 x 1 x 0.719 x 0.9938^65 = 142 x 0.719 x 0.667 = **68.1 mL/min/1.73 m²** (CKD stage 2)
+
 > **Note:** The thresholds above are simplified for teaching purposes. In clinical research, thresholds may vary by guideline version, patient population, and study design. Always document which thresholds and guidelines you used.
 
 [Back to Table of Contents](#table-of-contents)
