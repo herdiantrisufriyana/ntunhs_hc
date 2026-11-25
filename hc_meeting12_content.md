@@ -104,7 +104,9 @@ All visualizations in this session connect from the final cleaned Data Table out
 **Widgets:** Distributions
 
 1. Connect **Cleaned data** → **Distributions** via **Selected Data → Data**
-2. Select **age** from the variable dropdown
+2. Set **Split by** to `readmission_30d`
+3. Make sure **Stack columns** is **unchecked** — this shows the groups side by side so you can compare their shapes. With it checked, the bars overlap and are harder to read.
+4. Select **age** from the variable dropdown
    - Hospital populations are often **right-skewed** (more elderly patients) — check if this is the case
    - The distribution is automatically split by the target variable (**readmission_30d**)
    - Look for age ranges where readmitted patients are more concentrated
