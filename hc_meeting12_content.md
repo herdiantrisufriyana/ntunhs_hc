@@ -169,16 +169,32 @@ All visualizations in this session connect from the final cleaned Data Table out
 
 - When **both variables are categorical**, bar charts and scatter plots do not work well
 - Instead, use a **Mosaic Display** — a grid of rectangles where:
-  - **Tile width** represents the proportion of one variable's categories
-  - **Tile height** represents the proportion of the other variable's categories within each column
+  - **Tile width** represents the proportion of one variable's categories (x-axis)
+  - **Tile height** represents the proportion of the other variable's categories within each column (y-axis)
   - **Tile area** represents the count — larger tiles = more patients in that combination
-- **Uncheck "Compare with total"** to see a clean grid where only tile size matters. With it checked, Orange overlays reference bars that split tiles visually and can be confusing.
-- Set **Interior Coloring** to the x-axis variable — each column gets a distinct color, making it easy to compare proportions across rows.
-- If both variables are independent (no association), the row proportions will be the same in every column — the tiles will have the same height ratios regardless of column.
-- Example: if ICU patients are readmitted more often than expected, the ICU-readmitted tile will be blue (larger than expected) and the ICU-not-readmitted tile will be red (smaller than expected)
+- If both variables are independent (no association), the row proportions will be the same in every column — the tiles will have the same height ratios regardless of column
+
+**Two coloring modes in Orange (Interior Coloring dropdown):**
+
+- **Categorical variable** (e.g., `readmission_30d`): Each category gets a **flat color** (e.g., cyan for No, red for Yes). This just labels the columns — it does NOT show association strength. You judge association by comparing **tile height ratios** across columns.
+
+- **(Pearson residuals)**: Shows **how much each cell deviates from what you would expect if the variables were independent**. Uses a blue-red gradation scale:
+
+| Color | Pearson Residual Range | Meaning |
+|-------|----------------------|---------|
+| Dark red | < -8 | Much fewer than expected |
+| Medium red | -8 to -4 | Fewer than expected |
+| Light red/pink | -4 to -2 | Slightly fewer than expected |
+| White | -2 to 2 | Close to expected (no association) |
+| Light blue/lavender | 2 to 4 | Slightly more than expected |
+| Medium blue | 4 to 8 | More than expected |
+| Dark blue | > 8 | Much more than expected |
+
+- Example: for `icu_stay` x `readmission_30d`, if the ICU=Yes + readmission=Yes tile is light blue and the ICU=No + readmission=Yes tile is light pink, it means ICU patients are readmitted slightly more often than expected, and non-ICU patients slightly less often than expected. The color intensity tells you the strength — darker = stronger deviation.
+
 - Mosaic displays are essentially visual contingency tables — they show the same information as a chi-squared test but in a form you can see instantly
 
-*Can you guess what it means if all tiles are the same shade of gray (no blue or red)?*
+*Can you guess what it means if all tiles are white (Pearson residuals near zero)?*
 
 [Back to Table of Contents](#table-of-contents)
 
@@ -188,29 +204,36 @@ All visualizations in this session connect from the final cleaned Data Table out
 
 **Widgets:** Mosaic Display
 
+**Part A — Categorical coloring (compare tile height ratios):**
+
 1. Connect **Cleaned data** → **Mosaic Display** via **Selected Data → Data**
-2. **Uncheck "Compare with total"** — avoids reference bars that split tiles visually
-3. Set **Interior Coloring** to the first variable (the x-axis variable, e.g., **readmission_30d**) — each column gets a distinct color so proportion differences across rows are easy to see
-4. Set the variables to **admission_type** and **readmission_30d**
-   - Look at the tile sizes: are emergency admissions readmitted at a different rate than elective admissions?
-   - Compare the proportion of each admission type within the readmission=Yes column vs the readmission=No column
-5. Change the variables to **icu_stay** and **readmission_30d**
-   - Is the ICU=Yes tile proportionally taller in the readmission=Yes column?
-4. Change to **diabetes_flag** and **readmission_30d**
+2. **Uncheck "Compare with total"**
+3. Set **Interior Coloring** to `readmission_30d` — each column gets a flat color (cyan for No, red for Yes) so you can tell columns apart
+4. Set the variables to `readmission_30d` and `icu_stay`
+   - Is the ICU=Yes tile proportionally taller in the readmission=Yes column than in the readmission=No column?
+5. Change to `readmission_30d` and `admission_type`
+   - Are emergency admissions over-represented among readmissions?
+6. Change to `readmission_30d` and `diabetes_flag`
    - Is diabetes associated with higher readmission?
-   - Diabetes is a well-known risk factor for hospital readmission — does the mosaic display confirm this?
-5. Try **high_comorbidity** and **readmission_30d**
-   - Patients with high comorbidity burden (Charlson score above the threshold) may have higher readmission rates
-6. Try **anemia** and **icu_stay**
-   - Is anemia more common among ICU patients?
-   - This would make clinical sense: severely anemic patients are more likely to require intensive care
+
+**Part B — Pearson residual coloring (see deviation strength):**
+
+7. Set **Interior Coloring** to **(Pearson residuals)**
+8. Keep `readmission_30d` and `icu_stay` as the variables
+   - Look at the color of each tile and match it to the legend at the bottom (e.g., `<-8`, `-8:-4`, `-4:-2`, `-2:2`, `2:4`, `4:8`, `>8`)
+   - Blue tiles = more patients than expected under independence. Red/pink tiles = fewer than expected. White = close to expected.
+   - Is the ICU=Yes + readmission=Yes tile blue? That means ICU patients are readmitted more often than expected.
+   - Is the ICU=No + readmission=Yes tile pink/red? That means non-ICU patients are readmitted less often than expected.
+   - The color intensity tells you the strength of the deviation — darker = stronger.
+9. Try the same for `diabetes_flag`, `high_comorbidity`, `anemia` with `readmission_30d`
+10. Try `anemia` and `icu_stay` — is anemia more common among ICU patients?
 
 **Check these:**
-- Which categorical pair shows the strongest color deviation (strongest association)?
+- Which categorical pair shows the darkest blue/red tiles (strongest association)?
 - Do the associations match your clinical expectations?
 - Are any associations surprising or unexpected?
 
-> **Note:** The mosaic display visualizes the chi-squared test. Strong blue or red coloring means the observed frequency deviates substantially from the expected frequency under independence. This is equivalent to a large chi-squared statistic and a small p-value — but you can see the pattern directly instead of relying on a single number.
+> **Note:** Pearson residual coloring visualizes the chi-squared test. Darker colors = larger residuals = stronger deviation from independence. This is equivalent to a large chi-squared statistic and a small p-value — but you can see the pattern and direction directly.
 
 [Back to Table of Contents](#table-of-contents)
 
