@@ -270,8 +270,8 @@ Reading the results: ICU=Yes + Readmit=Yes has a residual of +3.24, meaning ther
 This session examines how continuous lab values correlate with each other. Since correlation requires continuous variables, we first isolate only the numeric lab and clinical measurements.
 
 1. Connect **Cleaned data** → **Select Columns** (label it "Select continuous variables") via **Selected Data → Data**
-   - Move the following to **Features**: wbc, hemoglobin, creatinine, age, length_of_stay, n_medications, charlson_score
-   - Move all categorical and flag variables to **Ignored** (admission_type, icu_stay, diabetes_flag, leukocytosis, anemia, hypertension, age_group, high_comorbidity, readmission_30d)
+   - Move the following to **Features**: wbc, hemoglobin, creatinine, hba1c, systolic_bp, heart_rate, age, length_of_stay, n_medications, charlson_score
+   - Move all categorical and flag variables to **Ignored** (admission_type, icu_stay, diabetes_flag, leukocytosis, anemia, hypertension, age_group, high_comorbidity, polypharmacy, high_risk_meds, readmission_30d, sex)
 
 **Option A: Using the Correlations widget (if available)**
 
