@@ -271,21 +271,31 @@ This session examines how continuous lab values correlate with each other. It re
 
 ### Prerequisites
 
-Open your saved Meeting 11 workflow. The **Formula** widget should include these expressions (copyable):
+Open your saved Meeting 11 workflow. The pipeline should be:
+
+File → Impute → Formula (clean implausible + flags) → Impute (1) → Select Rows → Merge Data → Cleaned Data
+
+The **Formula** widget should include 3 expressions that replace implausible values with NaN. If you haven't added them yet, add these now (click **New** → **Numeric** for each, type the name, paste the expression):
+
+**Name:** `heart_rate` **Expression:**
 
 ```
-diabetes_flag := 1 if hba1c >= 6.5 else 0
-leukocytosis := 1 if wbc > 11 else 0
-anemia := 1 if (sex == "F" and hemoglobin < 12) or (sex == "M" and hemoglobin < 13) else 0
-hypertension := 1 if systolic_bp >= 140 else 0
-age_group := "18-44" if age < 45 else ("45-64" if age < 65 else ("65-79" if age < 80 else "80+"))
-high_comorbidity := 1 if charlson_score >= 3 else 0
-heart_rate := float("nan") if heart_rate > 300 else heart_rate
-creatinine := float("nan") if creatinine < 0 else creatinine
-wbc := float("nan") if wbc < 0.5 else wbc
+float("nan") if heart_rate > 300 else heart_rate
 ```
 
-The last 3 expressions replace implausible values with NaN, and the second **Impute (1)** widget after Formula fills those NaN values. If these cleaning steps are missing, the Heat Map range will be stretched by outliers (e.g., -0.3 to 350) and the visualization will be unreadable. See Meeting 11 for details.
+**Name:** `creatinine` **Expression:**
+
+```
+float("nan") if creatinine < 0 else creatinine
+```
+
+**Name:** `wbc` **Expression:**
+
+```
+float("nan") if wbc < 0.5 else wbc
+```
+
+The second **Impute (1)** widget after Formula fills those NaN values. If these cleaning steps are missing, the Heat Map range will be stretched by outliers (e.g., -0.3 to 350) and the visualization will be unreadable. See Meeting 11 for details.
 
 ### Step 1: Select continuous variables only
 
