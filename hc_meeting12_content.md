@@ -180,17 +180,22 @@ All visualizations in this session connect from the final cleaned Data Table out
 
 - **(Pearson residuals)**: Shows **how much each cell deviates from what you would expect if the variables were independent**. Uses a blue-red gradation scale:
 
-| Color | Pearson Residual Range | Meaning |
-|-------|----------------------|---------|
-| Dark red | < -8 | Much fewer than expected |
-| Medium red | -8 to -4 | Fewer than expected |
-| Light red/pink | -4 to -2 | Slightly fewer than expected |
-| White | -2 to 2 | Close to expected (no association) |
-| Light blue/lavender | 2 to 4 | Slightly more than expected |
-| Medium blue | 4 to 8 | More than expected |
-| Dark blue | > 8 | Much more than expected |
+| Color | Pearson Residual Range | Interpretation |
+|-------|----------------------|----------------|
+| Dark red | < -8 | Observed count is more than 8 SDs below expected — dramatically fewer patients in this cell than independence would predict |
+| Medium red | -8 to -4 | 4-8 SDs below expected — substantially fewer |
+| Light red/pink | -4 to -2 | 2-4 SDs below expected — moderately fewer |
+| White | -2 to 2 | Within 2 SDs of expected — no meaningful deviation, consistent with independence |
+| Light blue/lavender | 2 to 4 | 2-4 SDs above expected — moderately more |
+| Medium blue | 4 to 8 | 4-8 SDs above expected — substantially more |
+| Dark blue | > 8 | More than 8 SDs above expected — dramatically more patients than independence would predict |
 
-- Example: for `icu_stay` x `readmission_30d`, if the ICU=Yes + readmission=Yes tile is light blue and the ICU=No + readmission=Yes tile is light pink, it means ICU patients are readmitted slightly more often than expected, and non-ICU patients slightly less often than expected. The color intensity tells you the strength — darker = stronger deviation.
+The Pearson residual is calculated as: (observed count - expected count) / sqrt(expected count). A residual of 3 means the observed count is 3 x sqrt(expected) higher than expected. Residuals beyond +/-2 are analogous to p < 0.05 in a standard normal test.
+
+- **Example:** For `icu_stay` x `readmission_30d`:
+  - ICU=Yes + readmission=Yes tile is **light blue (residual 2 to 4)**: There are 2-4 SDs more ICU patients readmitted than you would expect if ICU stay and readmission were independent. ICU patients are readmitted at a higher rate than the overall readmission rate would predict.
+  - ICU=No + readmission=Yes tile is **light pink (residual -2 to -4)**: There are 2-4 SDs fewer non-ICU patients readmitted than expected. Non-ICU patients are readmitted at a lower rate than the overall rate.
+  - The two large left-column tiles are **white (residual -2 to 2)**: The non-readmitted counts for both ICU and non-ICU are close to expected — most of the deviation is concentrated in the readmission=Yes column.
 
 - Mosaic displays are essentially visual contingency tables — they show the same information as a chi-squared test but in a form you can see instantly
 
