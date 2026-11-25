@@ -265,17 +265,29 @@ Reading the results: ICU=Yes + Readmit=Yes has a residual of +3.24, meaning ther
 
 ## Session 7: Hands-on — Heat Map for Lab Correlation Patterns (15 min)
 
-**Widgets:** Select Columns, Correlations (or Heat Map)
+**Widgets:** Select Columns, Correlations, Heat Map
 
-This session examines how continuous lab values correlate with each other. Since correlation requires continuous variables, we first isolate only the numeric lab and clinical measurements.
+This session examines how continuous lab values correlate with each other. It requires the cleaned dataset from the Meeting 11 pipeline.
 
-1. Connect **Cleaned data** → **Select Columns** (label it "Select continuous variables") via **Selected Data → Data**
+### Prerequisites
+
+Open your saved Meeting 11 workflow. The pipeline should be:
+
+```
+File → Impute → Formula (clean implausible + flags) → Impute (1) → Select Rows → Merge Data → Cleaned Data
+```
+
+The **Formula** widget should include expressions that replace implausible values with NaN (`heart_rate` > 300, `creatinine` < 0, `wbc` < 0.5), and the second **Impute (1)** fills those NaN values. If these cleaning steps are missing, the Heat Map range will be stretched by outliers (e.g., -0.3 to 350) and the visualization will be unreadable. See Meeting 11 for details.
+
+### Step 1: Select continuous variables only
+
+1. Connect **Cleaned Data** → **Select Columns** (label it "Select Continuous Variables") via **Data → Data**
    - Move the following to **Features**: wbc, hemoglobin, creatinine, hba1c, systolic_bp, heart_rate, age, length_of_stay, n_medications, charlson_score
    - Move all categorical and flag variables to **Ignored** (admission_type, icu_stay, diabetes_flag, leukocytosis, anemia, hypertension, age_group, high_comorbidity, polypharmacy, high_risk_meds, readmission_30d, sex)
 
-**Option A: Using the Correlations widget (if available)**
+### Step 2: Correlations widget
 
-2. Connect **Select continuous variables** → **Correlations** via **Data**
+2. Connect **Select Continuous Variables** → **Correlations** via **Data**
 3. The **Correlations** widget shows a matrix of pairwise Pearson correlation coefficients
 4. Look for strong correlations (values close to +1 or -1):
    - **creatinine and hemoglobin** — expect a negative correlation (inverse relationship in CKD)
@@ -283,21 +295,27 @@ This session examines how continuous lab values correlate with each other. Since
    - **age and charlson_score** — expect a positive correlation (older patients accumulate more comorbidities)
    - **age and creatinine** — expect a weak positive correlation (kidney function declines with age)
 
-**Option B: Using the Heat Map widget**
+### Step 3: Heat Map widget
 
-2. Connect **Select continuous variables** → **Heat Map** via **Data**
-3. The **Heat Map** widget displays a color-coded matrix of the data values
-   - Enable **Clustering** on both rows and columns to group similar variables and similar patients together
+5. Connect **Select Continuous Variables** → **Heat Map** via **Data**
+6. Configure the left panel:
+   - **Color**: Change to **Coolwarm** (a diverging palette — Orange may show a banner recommending this)
+   - **Center at**: `0`
+   - **Clustering Rows**: **Clustering**
+   - **Clustering Columns**: **Clustering** — this groups correlated variables together so patterns are visible
+   - **Split By Rows**: `readmission_30d` — this separates the heat map into readmitted vs not-readmitted blocks so you can compare patterns between groups
+7. Look for column patterns:
    - Variables that cluster together on the column axis have correlated patterns across patients
-4. Look for vertical bands of similar color — these indicate groups of patients with similar lab profiles
+   - Vertical bands of similar color indicate groups of patients with similar lab profiles
+   - Compare the readmitted (Yes) block vs the not-readmitted (No) block — do any variables show visibly different color patterns?
 
-**Interpreting the correlation patterns:**
+### Interpreting the results
 
-5. Identify variable pairs with strong correlations:
+8. Identify variable pairs with strong correlations:
    - **Negative correlation** (e.g., creatinine-hemoglobin): as one increases, the other decreases. Clinically, this reflects the erythropoietin pathway — damaged kidneys (high creatinine) produce less erythropoietin, causing anemia (low hemoglobin)
    - **Positive correlation** (e.g., charlson_score-n_medications): as one increases, the other increases. Patients with more chronic conditions take more medications
    - **Weak or no correlation** (e.g., wbc-hemoglobin): these lab values measure different physiological systems and may be independent
-6. Consider the clinical implications:
+9. Consider the clinical implications:
    - Strongly correlated variables carry redundant information — including both in a predictive model may cause multicollinearity
    - Unexpected correlations may reveal confounders or mediators for hypothesis testing
 
