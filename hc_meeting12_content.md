@@ -190,7 +190,26 @@ All visualizations in this session connect from the final cleaned Data Table out
 | Medium blue | 4 to 8 | 4-8 SDs above expected — substantially more |
 | Dark blue | > 8 | More than 8 SDs above expected — dramatically more patients than independence would predict |
 
-The Pearson residual is calculated as: (observed count - expected count) / sqrt(expected count). A residual of 3 means the observed count is 3 x sqrt(expected) higher than expected. Residuals beyond +/-2 are analogous to p < 0.05 in a standard normal test.
+The Pearson residual is calculated as: (observed - expected) / sqrt(expected), where the expected count for each cell = (row total x column total) / grand total. Residuals beyond +/-2 are analogous to p < 0.05.
+
+**Worked example:** `icu_stay` x `readmission_30d` contingency table:
+
+| | Readmit=No | Readmit=Yes | Total |
+|---|---|---|---|
+| ICU=Yes | 110 | 32 | 142 |
+| ICU=No | 326 | 32 | 358 |
+| Total | 436 | 64 | 500 |
+
+Calculating expected counts and Pearson residuals for each cell:
+
+| Cell | Observed | Expected (row x col / 500) | Residual (obs - exp) / sqrt(exp) | Color |
+|---|---|---|---|---|
+| ICU=Yes + Readmit=Yes | 32 | 142 x 64 / 500 = 18.2 | (32 - 18.2) / sqrt(18.2) = **+3.24** | Light blue (2:4) |
+| ICU=No + Readmit=Yes | 32 | 358 x 64 / 500 = 45.8 | (32 - 45.8) / sqrt(45.8) = **-2.04** | Light pink (-4:-2) |
+| ICU=Yes + Readmit=No | 110 | 142 x 436 / 500 = 123.8 | (110 - 123.8) / sqrt(123.8) = **-1.24** | White (-2:2) |
+| ICU=No + Readmit=No | 326 | 358 x 436 / 500 = 312.2 | (326 - 312.2) / sqrt(312.2) = **+0.78** | White (-2:2) |
+
+Reading the results: ICU=Yes + Readmit=Yes has a residual of +3.24, meaning there are 32 patients in this cell but only 18.2 were expected — 76% more ICU patients were readmitted than you would expect if ICU stay and readmission were independent. The light blue color confirms this positive deviation. Conversely, ICU=No + Readmit=Yes has a residual of -2.04, meaning there are 32 non-ICU readmissions but 45.8 were expected — 30% fewer than expected, shown as light pink.
 
 - **Example:** For `icu_stay` x `readmission_30d`:
   - ICU=Yes + readmission=Yes tile is **light blue (residual 2 to 4)**: There are 2-4 SDs more ICU patients readmitted than you would expect if ICU stay and readmission were independent. ICU patients are readmitted at a higher rate than the overall readmission rate would predict.
